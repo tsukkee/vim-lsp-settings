@@ -323,6 +323,13 @@ To enable full Vue support, both `typescript-language-server` and `volar-server`
 let g:lsp_settings_filetype_vue = ['typescript-language-server', 'volar-server']
 ```
 
+And, some lsp fetures only exists on `typescript-language-server` so you may need to specify `typescript-language-server` when calling vim-lsp functions.
+For example, to rename a symbol in a Vue file, you can use the following mapping when `vue` filetype:
+
+```vim
+nnoremap <buffer><expr> (your mapping here) lsp#ui#vim#rename({'server': 'typescript-language-server'})
+```
+
 ## Extra Configurations
 
 Most of the configurations are not required.
