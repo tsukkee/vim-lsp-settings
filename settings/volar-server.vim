@@ -41,24 +41,13 @@ augroup vim_lsp_settings_volar_server
 augroup END
 
 function! s:on_lsp_buffer_enabled() abort
-  " Force some capabilities to be enabled.
-  " These capabilities are expected to be registered by dynamic registration
-  " by vim-lsp, but are registered statically by volar.
-  " cf. https://github.com/prabirshrestha/vim-lsp/pull/1379
-  let l:capabilities = lsp#get_server_capabilities('volar-server')
-  if !empty(l:capabilities)
-    let l:capabilities.callHierarcyProvider = v:true
-    let l:capabilities.renameProvider = {'prepareProvider': v:true}
-    let l:capabilities.signatureHelpProvider = v:true
-    let l:capabilities.workspaceSymbolProvider = v:true
-  endif
-
   " check typescript-language-server
   let ts_server_dir = lsp_settings#servers_dir() .. '/typescript-language-server'
   if !isdirectory(ts_server_dir)
     call lsp_settings#utils#warning('Please install typescript-language-server to enable Vue support')
   endif
 
+  " check the filetype setting
   if !exists('g:lsp_settings_filetype_vue') ||
   \ index(g:lsp_settings_filetype_vue, 'volar-server') == -1 ||
   \ index(g:lsp_settings_filetype_vue, 'typescript-language-server') == -1
